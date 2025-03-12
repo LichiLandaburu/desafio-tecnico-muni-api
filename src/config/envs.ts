@@ -10,6 +10,11 @@ export const envs = {
   DB_PASSWORD: get("DB_PASSWORD").asString(),
   DB_NAME: get("DB_NAME").required().asString(),
 
+  FTP_USER: get("FTP_USER").required().asString(),
+  FTP_PASSWORD: get("FTP_PASSWORD").required().asString(),
+  FTP_HOST: get("FTP_HOST").required().asString(),
+  FTP_PORT: get("FTP_PORT").required().asPortNumber(),
+
   ACCESS_TOKEN_SEED: get("ACCESS_TOKEN_SEED").required().asString(),
   REFRESH_TOKEN_SEED: get("REFRESH_TOKEN_SEED").required().asString(),
 

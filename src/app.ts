@@ -4,6 +4,8 @@ import { dbConnect } from "./config/database";
 import { userRouter } from "./routes/auth.routes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { procedureRouter } from "./routes/procedure.routes";
+import path from "path";
 
 const PORT = envs.PORT || 4000;
 
@@ -16,9 +18,10 @@ app.use(cors());
 
 app.use(cookieParser());
 
-app.use(express.static("public"));
+app.use("/uploads", express.static(path.join(__dirname, "../../uploads")));
 
 app.use("/api/auth", userRouter);
+app.use("/api/procedures", procedureRouter);
 
 dbConnect()
   .then(() => {

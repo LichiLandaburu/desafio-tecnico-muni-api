@@ -1,4 +1,5 @@
-import { dbConnect } from "../config/database";
+import { dbConnect, sequelize } from "../config/database";
+import { ProcedureModel } from "../models/Procedure";
 import { UserModel } from "../models/User";
 import { seedData } from "./data";
 
@@ -8,6 +9,7 @@ import { seedData } from "./data";
  
   await seed();
 
+  await sequelize.close();
 
 })();
 
@@ -19,7 +21,15 @@ async function seed() {
   ]);
   
   // 2. Crear usuarios
-  await UserModel.bulkCreate(seedData.users);
+  const users = await UserModel.bulkCreate(seedData.users);
+  const usersId = users.map(user => user.dataValues.id);
+
+  // 3. Crear tramites 
+  const newProcedures = seedData.procedures.map(tramite => ({
+    ...tramite,
+    id_user: usersId[Math.floor(Math.random() * usersId.length)]
+  }));
+  await ProcedureModel.bulkCreate(newProcedures);
 
   console.log("SEEDED");
 

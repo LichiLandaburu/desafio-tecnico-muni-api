@@ -11,7 +11,6 @@ export class UserModel extends Model {
   dni!: string;
   birthday!: Date;
   role!: string;
-  img?: string;
   isActive!: boolean;
   createdAt!: Date;
   updatedAt!: Date;
@@ -42,7 +41,7 @@ UserModel.init(
       allowNull: false,
     },
     dni: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(8),
       allowNull: false,
       unique: true,
     },
