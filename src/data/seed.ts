@@ -18,6 +18,7 @@ async function seed() {
   // 1. Borrar todo
   await Promise.all([
     UserModel.destroy({ where: {} }),
+    ProcedureModel.destroy({ where: {}  })
   ]);
   
   // 2. Crear usuarios

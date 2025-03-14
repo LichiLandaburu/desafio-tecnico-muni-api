@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-export function checkRol(authorizedRoles: string[]) {
+export function checkRol(authorizedRole: "admin" | "user") {
 
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -8,9 +8,7 @@ export function checkRol(authorizedRoles: string[]) {
 
       if (!user) return res.status(401).json({ error: "Unauthorized" });
 
-      const hasAuthorizedRole = authorizedRoles.some(role =>
-        user.roles.includes(role)
-      );
+      const hasAuthorizedRole = user.role === authorizedRole;
 
       if (!hasAuthorizedRole) return res.status(401).json({ error: "Unauthorized" });
 

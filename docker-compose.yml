@@ -1,4 +1,6 @@
 
+version: "3.8"
+
 services:
   mysql-db:
     image: mysql:8.0
@@ -9,3 +11,4 @@ services:
       - ./mysql:/var/lib/mysql
     ports:
       - "3306:3306"
+    restart: always

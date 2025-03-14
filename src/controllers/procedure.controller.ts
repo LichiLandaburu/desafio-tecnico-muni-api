@@ -28,12 +28,13 @@ export const getProcedureByID = async (req: Request, res: Response): Promise<voi
   const { id } = req.params;
   try {
     const procedure = await ProcedureModel.findByPk(id, {
+      attributes: { exclude: ["id_user"] },
       include: [ 
         { 
           model: UserModel,
           as: "user"
         } 
-      ]
+      ],
     });
     if (!procedure) {
       res.status(404).json({ error: "Procedure not found" });
@@ -55,13 +56,7 @@ export const createProcedure = async (req: Request, res: Response): Promise<void
       return;
     }
 
-    const existingDNI = await ProcedureModel.findOne({ where: { dni } });
-    if (existingDNI) {
-      res.status(400).json({ error: "This person already has a procedure in process" });
-      return;
-    }
-
-    const procedure = await ProcedureModel.create({ id_user, name, lastname, email, dni, province, city, address, postal_code, telephone, status, detailed_document, comments });
+    const procedure = await ProcedureModel.create({ name, lastname, email, dni, province, city, address, postal_code, telephone, status, detailed_document, comments, id_user });
     res.status(201).json({ procedure });
   }
   catch (error) {

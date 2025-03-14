@@ -39,12 +39,10 @@ ProcedureModel.init(
     email: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true,
     },
     dni: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
     },
     province: {
       type: DataTypes.STRING(255),
@@ -85,6 +83,7 @@ ProcedureModel.init(
   }
 );
 
+UserModel.hasMany(ProcedureModel, { foreignKey: "id_user", as: "procedures" });
 ProcedureModel.belongsTo(UserModel, { foreignKey: "id_user", as: "user" });
 
 export { ProcedureModel };
